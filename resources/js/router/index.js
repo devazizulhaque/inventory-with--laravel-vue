@@ -15,6 +15,7 @@ import EmployeeEditView from '../views/employee/EmployeeEditView.vue'
 //supplier
 import SupplierView from '../views/supplier/SupplierView.vue'
 import SupplierCreateView from '../views/supplier/SupplierCreateView.vue'
+import SupplierEditView from '../views/supplier/SupplierEditView.vue'
 
 const routes = [
     {
@@ -86,7 +87,7 @@ const routes = [
     {
         path: "/admin/supplier/edit/:id",
         name: "supplier-edit",
-        component: SupplierCreateView,
+        component: SupplierEditView,
         meta: {
             title: 'Supplier Edit',
             auth: true,

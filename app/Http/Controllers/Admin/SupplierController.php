@@ -56,7 +56,8 @@ class SupplierController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $supplier = Supplier::find($id);
+        return response()->json($supplier);
     }
 
     /**
@@ -72,7 +73,19 @@ class SupplierController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|string|min:3|max:255',
+            'email' => 'required|email|unique:suppliers,email,' . $id,
+            'phone' => 'required|unique:suppliers,phone,' . $id,
+            'address' => 'required',
+            'shopname' => 'required',
+        ]);
+        $supplier = Supplier::CreateOrUpdate($request, $id);
+        return response()->json([
+            'success' => true,
+            'message' => 'Supplier updated successfully',
+            'supplier' => $supplier
+        ], 200);
     }
 
     /**
@@ -80,6 +93,10 @@ class SupplierController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Supplier::find($id)->delete();
+        return response()->json([
+            'success' => true,
+            'message' => 'Supplier deleted successfully...'
+        ], 200);
     }
 }

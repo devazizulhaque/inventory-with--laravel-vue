@@ -37,8 +37,6 @@
                  <th>Phone</th>
                  <th>Email</th>
                  <th>Address</th>
-                 <th>Position</th>
-                 <th>Salary</th>
                  <th>Actions</th>
                 </tr>
               </thead>
@@ -56,8 +54,6 @@
                   <td>{{ supplier.phone }}</td>
                   <td>{{ supplier.email }}</td>
                   <td>{{ supplier.address }}</td>
-                  <td>{{ supplier.position }}</td>
-                  <td>{{ supplier.salary }}</td>
                   <td>
                     <div class="table-actions d-flex align-items-center gap-3 fs-6">
                       <a type="button" data-bs-toggle="modal" data-bs-target="#supplierModal" class="text-primary" data-bs-placement="bottom" title="View" @click="showSupplierModal(supplier)" ><i class="bi bi-eye-fill"></i></a>
@@ -78,7 +74,7 @@
 </template>
 
 <script>
-import SupplierSingle from '../../components/admin/employee/EmployeeSingle.vue'
+import SupplierSingle from '../../components/admin/supplier/SupplierSingle.vue'
 import User from '../../Helpers/User';
 
 export default {

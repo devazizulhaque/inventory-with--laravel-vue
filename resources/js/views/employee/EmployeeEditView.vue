@@ -132,7 +132,6 @@ export default {
         employeeUpdate() {
             axios.put('/api/employee/' + this.$route.params.id, this.form)
             .then((response) => {
-                console.log(response.data.success);
                 if (response.data.success === true) {
                     this.$router.push({ name: 'employee' });
                     Toast.fire({
