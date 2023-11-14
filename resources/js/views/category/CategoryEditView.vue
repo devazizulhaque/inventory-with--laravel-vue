@@ -1,13 +1,13 @@
 <template>
     <!--breadcrumb-->
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3">Supplier</div>
+        <div class="breadcrumb-title pe-3">Category</div>
         <div class="ps-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 p-0">
                     <li class="breadcrumb-item"><router-link :to="{name: 'dashboard'}"><i class="bx bx-home-alt"></i></router-link>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">Supplier Edit</li>
+                    <li class="breadcrumb-item active" aria-current="page">Category Edit</li>
                 </ol>
             </nav>
         </div>
@@ -17,48 +17,19 @@
     <div class="row">
         <div class="col-xl-9 mx-auto">
             <div class="p-4 border rounded">
-                <form @submit.prevent="supplierUpdate" enctype="multipart/form-data">
+                <form @submit.prevent="categoryUpdate" enctype="multipart/form-data">
                     <div class="card-title d-flex align-items-center">
-                        <h5 class="mb-0">Supplier Edit</h5>
+                        <h5 class="mb-0">Category Edit</h5>
                     </div>
                     <hr/>
                     <div class="row mb-3">
-                        <label for="inputEnterYourName" class="col-sm-3 col-form-label">Enter Supplier Name</label>
+                        <label for="inputEnterCategoryName" class="col-sm-3 col-form-label">Enter Category Name</label>
                         <div class="col-sm-9">
                             <small class="text-danger" v-if="errors.name">{{ errors.name[0] }}</small>
-                            <input type="text" class="form-control" id="inputEnterYourName" placeholder="Enter Your Name" v-model="form.name">
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="inputPhoneNo2" class="col-sm-3 col-form-label">Phone No</label>
-                        <div class="col-sm-9">
-                            <small class="text-danger" v-if="errors.phone">{{ errors.phone[0] }}</small>
-                            <input type="text" class="form-control" id="inputPhoneNo2" placeholder="Phone No" v-model="form.phone">
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="inputEmailAddress2" class="col-sm-3 col-form-label">Email Address</label>
-                        <div class="col-sm-9">
-                            <small class="text-danger" v-if="errors.email">{{ errors.email[0] }}</small>
-                            <input type="email" class="form-control" id="inputEmailAddress2" placeholder="Email Address" v-model="form.email">
+                            <input type="text" class="form-control" id="inputEnterCategoryName" placeholder="Enter Your Name" v-model="form.name">
                         </div>
                     </div>
 
-                    <div class="row mb-3">
-                        <label for="inputAddress4" class="col-sm-3 col-form-label">Address</label>
-                        <div class="col-sm-9">
-                            <small class="text-danger" v-if="errors.address">{{ errors.address[0] }}</small>
-                            <textarea class="form-control" id="inputAddress4" rows="3" placeholder="Address" v-model="form.address"></textarea>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="inputSalary" class="col-sm-3 col-form-label">Shop Name</label>
-                        <div class="col-sm-9">
-                            <small class="text-danger" v-if="errors.shopname">{{ errors.shopname[0] }}</small>
-                            <input type="text" class="form-control" id="inputShopname" placeholder="Enter Shop Name" v-model="form.shopname">
-                        </div>
-                    </div>
-                    
                     <div class="row mb-3">
                         <label for="inputPhoto" class="col-sm-3 col-form-label">Photo</label>
                         <div class="col-sm-5">
@@ -67,14 +38,14 @@
                         </div>
                         <div class="col-sm-4">
                             <img v-if="form.newPhoto" :src="form.newPhoto" alt="" width="100">
-                            <img v-else :src="'/' + form.photo" alt="" width="100">
+                            <img v-else :src="'/' + form.image" alt="" width="100">
                         </div>
                     </div>
 
                     <div class="row">
                         <label class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-9">
-                            <button type="submit" class="btn btn-primary px-5">Register</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </div>
                 </form>
@@ -85,16 +56,12 @@
 
 <script>
 export default {
-    name: "SupplierEditView",
+    name: "CategoryEditView",
     data() {
         return {
             form: {
                 name: '',
-                phone: '',
-                email: '',
-                address: '',
-                shopname: '',
-                photo: '',
+                image: '',
                 newPhoto: '',
             },
             errors: {},
@@ -120,11 +87,11 @@ export default {
             }
         },
         
-        supplierUpdate() {
-            axios.put('/api/supplier/' + this.$route.params.id, this.form)
+        categoryUpdate() {
+            axios.put('/api/category/' + this.$route.params.id, this.form)
             .then((response) => {
                 if (response.data.success === true) {
-                    this.$router.push({ name: 'supplier' });
+                    this.$router.push({ name: 'category' });
                     Toast.fire({
                         icon: 'success',
                         title: response.data.message,
@@ -146,7 +113,7 @@ export default {
         },
     },
     mounted() {
-        axios.get('/api/supplier/' + this.$route.params.id)
+        axios.get('/api/category/' + this.$route.params.id)
         .then((response) => {
             this.form = response.data;
 

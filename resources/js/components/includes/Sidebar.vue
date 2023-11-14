@@ -18,6 +18,10 @@
                 <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-supplier" type="button"><i class="lni lni-network"></i></button>
             </li>
 
+            <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" title="Category">
+                <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-category" type="button"><i class="lni lni-list"></i></button>
+            </li>
+
             <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" title="Supplier">
                 <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-application" type="button"><i class="bi bi-grid-fill"></i></button>
             </li>
@@ -102,6 +106,18 @@
                     </div>
                     <router-link :to="{name: 'supplier'}" class="list-group-item"><i class="fadeIn animated bx bx-group"></i>Supplier List</router-link>
                     <router-link :to="{name: 'supplier-add'}" class="list-group-item"><i class="fadeIn animated bx bx-user-plus"></i>Add Supplier</router-link>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-category">
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-0">Category</h5>
+                    </div>
+                    </div>
+                    <router-link :to="{name: 'category'}" class="list-group-item"><i class="fadeIn animated bx bx-list-check"></i>Category List</router-link>
+                    <router-link :to="{name: 'category-add'}" class="list-group-item"><i class="fadeIn animated bx bx-list-plus"></i>Add Category</router-link>
                 </div>
             </div>
 

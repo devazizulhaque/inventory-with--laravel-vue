@@ -17,6 +17,11 @@ import SupplierView from '../views/supplier/SupplierView.vue'
 import SupplierCreateView from '../views/supplier/SupplierCreateView.vue'
 import SupplierEditView from '../views/supplier/SupplierEditView.vue'
 
+//category
+import CategoryView from '../views/category/CategoryView.vue'
+import CategoryCreateView from '../views/category/CategoryCreateView.vue'
+import CategoryEditView from '../views/category/CategoryEditView.vue'
+
 const routes = [
     {
         path: "/",
@@ -90,6 +95,35 @@ const routes = [
         component: SupplierEditView,
         meta: {
             title: 'Supplier Edit',
+            auth: true,
+        },
+    },
+
+    //Category
+    {
+        path: "/admin/category",
+        name: "category",
+        component: CategoryView,
+        meta: {
+            title: 'Category',
+            auth: true,
+        },
+    },
+    {
+        path: "/admin/category/add",
+        name: "category-add",
+        component: CategoryCreateView,
+        meta: {
+            title: 'Category Add',
+            auth: true,
+        },
+    },
+    {
+        path: "/admin/category/edit/:id",
+        name: "category-edit",
+        component: CategoryEditView,
+        meta: {
+            title: 'Category Edit',
             auth: true,
         },
     },

@@ -7,7 +7,7 @@
                 <ol class="breadcrumb mb-0 p-0">
                     <li class="breadcrumb-item"><router-link :to="{name: 'dashboard'}"><i class="bx bx-home-alt"></i></router-link>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">Supplier Edit</li>
+                    <li class="breadcrumb-item active" aria-current="page">Supplier Create</li>
                 </ol>
             </nav>
         </div>
@@ -17,16 +17,16 @@
     <div class="row">
         <div class="col-xl-9 mx-auto">
             <div class="p-4 border rounded">
-                <form @submit.prevent="supplierUpdate" enctype="multipart/form-data">
+                <form @submit.prevent="supplier" enctype="multipart/form-data">
                     <div class="card-title d-flex align-items-center">
-                        <h5 class="mb-0">Supplier Edit</h5>
+                        <h5 class="mb-0">Supplier Add</h5>
                     </div>
                     <hr/>
                     <div class="row mb-3">
                         <label for="inputEnterYourName" class="col-sm-3 col-form-label">Enter Supplier Name</label>
                         <div class="col-sm-9">
                             <small class="text-danger" v-if="errors.name">{{ errors.name[0] }}</small>
-                            <input type="text" class="form-control" id="inputEnterYourName" placeholder="Enter Your Name" v-model="form.name">
+                            <input type="text" class="form-control" id="inputEnterYourName" placeholder="Enter Supplier Name" v-model="form.name">
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -43,7 +43,7 @@
                             <input type="email" class="form-control" id="inputEmailAddress2" placeholder="Email Address" v-model="form.email">
                         </div>
                     </div>
-
+                    
                     <div class="row mb-3">
                         <label for="inputAddress4" class="col-sm-3 col-form-label">Address</label>
                         <div class="col-sm-9">
@@ -51,23 +51,23 @@
                             <textarea class="form-control" id="inputAddress4" rows="3" placeholder="Address" v-model="form.address"></textarea>
                         </div>
                     </div>
+
                     <div class="row mb-3">
-                        <label for="inputSalary" class="col-sm-3 col-form-label">Shop Name</label>
+                        <label for="inputShopname5" class="col-sm-3 col-form-label">Shop Name</label>
                         <div class="col-sm-9">
                             <small class="text-danger" v-if="errors.shopname">{{ errors.shopname[0] }}</small>
-                            <input type="text" class="form-control" id="inputShopname" placeholder="Enter Shop Name" v-model="form.shopname">
+                            <input type="text" class="form-control" id="inputShopname5" placeholder="Shop Name" v-model="form.shopname">
                         </div>
                     </div>
-                    
+
                     <div class="row mb-3">
                         <label for="inputPhoto" class="col-sm-3 col-form-label">Photo</label>
                         <div class="col-sm-5">
-                            <small class="text-danger" v-if="errors.photo">{{ errors.photo[0] }}</small>
+                            <small class="text-danger" v-if="errors.newPhoto">{{ errors.newPhoto[0] }}</small>
                             <input type="file" class="form-control" id="inputPhoto" placeholder="Choose Photo" @change="onFileSelected">
                         </div>
                         <div class="col-sm-4">
-                            <img v-if="form.newPhoto" :src="form.newPhoto" alt="" width="100">
-                            <img v-else :src="'/' + form.photo" alt="" width="100">
+                            <img :src="form.newPhoto" alt="" width="100">
                         </div>
                     </div>
 
@@ -85,7 +85,7 @@
 
 <script>
 export default {
-    name: "SupplierEditView",
+    name: "SupplierCreateView",
     data() {
         return {
             form: {
@@ -103,7 +103,7 @@ export default {
     methods: {
         onFileSelected(event) {
             let file = event.target.files[0];
-            if (file.size > 1048770) {
+            if (file.size > 1048576) {
                 Toast.fire({
                     icon: 'error',
                     title: 'File size should be less than 1 MB.',
@@ -111,7 +111,6 @@ export default {
             }
             else{
                 this.form.newPhoto = URL.createObjectURL(file);
-
                 let reader = new FileReader();
                 reader.onload = (e) => {
                     this.form.newPhoto = e.target.result;
@@ -120,43 +119,22 @@ export default {
             }
         },
         
-        supplierUpdate() {
-            axios.put('/api/supplier/' + this.$route.params.id, this.form)
-            .then((response) => {
-                if (response.data.success === true) {
-                    this.$router.push({ name: 'supplier' });
+        supplier() {
+            axios.post('/api/supplier', this.form)
+                .then(res => {
+                    this.$router.push({name: 'supplier'});
                     Toast.fire({
                         icon: 'success',
-                        title: response.data.message,
+                        title: 'Supplier created successfully.',
                     });
-                }
-                else{
-                    Toast.fire({
-                        icon: 'error',
-                        title: response.data.message,
-                    });
-                }
-            })
-            .catch((error) => {
-                Toast.fire({
-                    icon: 'error',
-                    title: 'Something went wrong!!!',
-                });
-            })
+                })
+                .catch(err => {
+                    this.errors = err.response.data.errors;
+                })
         },
     },
     mounted() {
-        axios.get('/api/supplier/' + this.$route.params.id)
-        .then((response) => {
-            this.form = response.data;
-
-        })
-        .catch((error) => {
-            Toast.fire({
-                icon: 'error',
-                title: 'Employee Not Found!!!',
-            });
-        })
+        //
     }
 }
 </script>
